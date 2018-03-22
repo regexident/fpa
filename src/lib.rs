@@ -230,7 +230,7 @@ macro_rules! q {
         where
             FRAC: Unsigned,
         {
-            type Output = f32;
+            type Output = Self;
 
             fn cast(x: Q<$bits, FRAC>) -> Self::Output {
                 f32(x.bits) / f32(1u64 << FRAC::to_u8())
@@ -241,7 +241,7 @@ macro_rules! q {
         where
             FRAC: Unsigned,
         {
-            type Output = f64;
+            type Output = Self;
 
             fn cast(x: Q<$bits, FRAC>) -> Self::Output {
                 f64(x.bits) / f64(1u64 << FRAC::to_u8())
@@ -827,7 +827,7 @@ macro_rules! cast {
      $(| $medium32:ident $medium16:ident,)+
      $(- $small32:ident $small16:ident $small8:ident,)+) => {
         impl cast::From<$largest32> for isize {
-            type Output = isize;
+            type Output = Self;
 
             fn cast(x: $largest32) -> Self::Output {
                 isize(i32(x))
@@ -843,7 +843,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$largest32> for i64 {
-            type Output = i64;
+            type Output = Self;
 
             fn cast(x: $largest32) -> Self::Output {
                 i64(i32(x))
@@ -859,7 +859,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$largest32> for i32 {
-            type Output = i32;
+            type Output = Self;
 
             fn cast(x: $largest32) -> i32 {
                 x.bits >> $largest32::fbits()
@@ -886,7 +886,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$largest32> for i8 {
-            type Output = Result<i8, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $largest32) -> Self::Output {
                 i8(i32(x))
@@ -902,7 +902,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$largest32> for usize {
-            type Output = Result<usize, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $largest32) -> Self::Output {
                 usize(i32(x))
@@ -918,7 +918,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$largest32> for u64 {
-            type Output = Result<u64, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $largest32) -> Self::Output {
                 u64(i32(x))
@@ -934,7 +934,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$largest32> for u32 {
-            type Output = Result<u32, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $largest32) -> Self::Output {
                 u32(i32(x))
@@ -950,7 +950,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$largest32> for u16 {
-            type Output = Result<u16, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $largest32) -> Self::Output {
                 u16(i32(x))
@@ -961,7 +961,7 @@ macro_rules! cast {
         // impl cast::From<u16> for $largest32 {}
 
         impl cast::From<$largest32> for u8 {
-            type Output = Result<u8, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $largest32) -> Self::Output {
                 u8(i32(x))
@@ -1105,7 +1105,7 @@ macro_rules! cast {
      $(| $medium32:ident $medium16:ident,)*
      $(- $small32:ident $small16:ident $small8:ident,)+) => {
         impl cast::From<$large32> for isize {
-            type Output = isize;
+            type Output = Self;
 
             fn cast(x: $large32) -> Self::Output {
                 isize(i16(x))
@@ -1121,7 +1121,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for i64 {
-            type Output = i64;
+            type Output = Self;
 
             fn cast(x: $large32) -> Self::Output {
                 i64(i16(x))
@@ -1137,7 +1137,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for i32 {
-            type Output = i32;
+            type Output = Self;
 
             fn cast(x: $large32) -> Self::Output {
                 i32(i16(x))
@@ -1153,7 +1153,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for i16 {
-            type Output = i16;
+            type Output = Self;
 
             fn cast(x: $large32) -> Self::Output {
                 (x.bits >> $large32::fbits()) as i16
@@ -1180,7 +1180,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for usize {
-            type Output = Result<usize, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large32) -> Self::Output {
                 usize(i16(x))
@@ -1196,7 +1196,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for u64 {
-            type Output = Result<u64, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large32) -> Self::Output {
                 u64(i16(x))
@@ -1212,7 +1212,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for u32 {
-            type Output = Result<u32, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large32) -> Self::Output {
                 u32(i16(x))
@@ -1228,7 +1228,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for u16 {
-            type Output = Result<u16, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large32) -> Self::Output {
                 u16(i16(x))
@@ -1244,7 +1244,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large32> for u8 {
-            type Output = Result<u8, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large32) -> Self::Output {
                 u8(i16(x))
@@ -1255,7 +1255,7 @@ macro_rules! cast {
         // impl cast::From<u8> for $large32 {}
 
         impl cast::From<$large16> for isize {
-            type Output = isize;
+            type Output = Self;
 
             fn cast(x: $large16) -> Self::Output {
                 isize(i16(x))
@@ -1271,7 +1271,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for i64 {
-            type Output = i64;
+            type Output = Self;
 
             fn cast(x: $large16) -> Self::Output {
                 i64(i16(x))
@@ -1287,7 +1287,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for i32 {
-            type Output = i32;
+            type Output = Self;
 
             fn cast(x: $large16) -> Self::Output {
                 i32(i16(x))
@@ -1303,7 +1303,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for i16 {
-            type Output = i16;
+            type Output = Self;
 
             fn cast(x: $large16) -> Self::Output {
                 (x.bits >> $large16::fbits()) as i16
@@ -1330,7 +1330,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for usize {
-            type Output = Result<usize, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large16) -> Self::Output {
                 usize(i16(x))
@@ -1346,7 +1346,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for u64 {
-            type Output = Result<u64, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large16) -> Self::Output {
                 u64(i16(x))
@@ -1362,7 +1362,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for u32 {
-            type Output = Result<u32, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large16) -> Self::Output {
                 u32(i16(x))
@@ -1378,7 +1378,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for u16 {
-            type Output = Result<u16, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large16) -> Self::Output {
                 u16(i16(x))
@@ -1394,7 +1394,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$large16> for u8 {
-            type Output = Result<u8, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $large16) -> Self::Output {
                 u8(i16(x))
@@ -1617,7 +1617,7 @@ macro_rules! cast {
      $(- $small32:ident $small16:ident $small8:ident,)*) => {
         // Cast from/to primitives
         impl cast::From<$medium32> for isize {
-            type Output = isize;
+            type Output = Self;
 
             fn cast(x: $medium32) -> Self::Output {
                 isize(i8(x))
@@ -1633,7 +1633,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for i64 {
-            type Output = i64;
+            type Output = Self;
 
             fn cast(x: $medium32) -> Self::Output {
                 i64(i8(x))
@@ -1649,7 +1649,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for i32 {
-            type Output = i32;
+            type Output = Self;
 
             fn cast(x: $medium32) -> Self::Output {
                 i32(i8(x))
@@ -1665,7 +1665,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for i16 {
-            type Output = i16;
+            type Output = Self;
 
             fn cast(x: $medium32) -> Self::Output {
                 i16(i8(x))
@@ -1681,7 +1681,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for i8 {
-            type Output = i8;
+            type Output = Self;
 
             fn cast(x: $medium32) -> Self::Output {
                 (x.bits >> $medium32::fbits()) as i8
@@ -1698,7 +1698,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for usize {
-            type Output = Result<usize, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium32) -> Self::Output {
                 usize(i8(x))
@@ -1714,7 +1714,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for u64 {
-            type Output = Result<u64, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium32) -> Self::Output {
                 u64(i8(x))
@@ -1730,7 +1730,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for u32 {
-            type Output = Result<u32, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium32) -> Self::Output {
                 u32(i8(x))
@@ -1746,7 +1746,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for u16 {
-            type Output = Result<u16, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium32) -> Self::Output {
                 u16(i8(x))
@@ -1762,7 +1762,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium32> for u8 {
-            type Output = Result<u8, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium32) -> Self::Output {
                 u8(i8(x))
@@ -1778,7 +1778,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for isize {
-            type Output = isize;
+            type Output = Self;
 
             fn cast(x: $medium16) -> Self::Output {
                 isize(i8(x))
@@ -1794,7 +1794,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for i64 {
-            type Output = i64;
+            type Output = Self;
 
             fn cast(x: $medium16) -> Self::Output {
                 i64(i8(x))
@@ -1810,7 +1810,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for i32 {
-            type Output = i32;
+            type Output = Self;
 
             fn cast(x: $medium16) -> Self::Output {
                 i32(i8(x))
@@ -1826,7 +1826,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for i16 {
-            type Output = i16;
+            type Output = Self;
 
             fn cast(x: $medium16) -> Self::Output {
                 i16(i8(x))
@@ -1842,7 +1842,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for i8 {
-            type Output = i8;
+            type Output = Self;
 
             fn cast(x: $medium16) -> Self::Output {
                 (x.bits >> $medium16::fbits()) as i8
@@ -1859,7 +1859,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for usize {
-            type Output = Result<usize, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium16) -> Self::Output {
                 usize(i8(x))
@@ -1875,7 +1875,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for u64 {
-            type Output = Result<u64, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium16) -> Self::Output {
                 u64(i8(x))
@@ -1891,7 +1891,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for u32 {
-            type Output = Result<u32, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium16) -> Self::Output {
                 u32(i8(x))
@@ -1907,7 +1907,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for u16 {
-            type Output = Result<u16, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium16) -> Self::Output {
                 u16(i8(x))
@@ -1923,7 +1923,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium16> for u8 {
-            type Output = Result<u8, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium16) -> Self::Output {
                 u8(i8(x))
@@ -1939,7 +1939,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for isize {
-            type Output = isize;
+            type Output = Self;
 
             fn cast(x: $medium8) -> Self::Output {
                 isize(i8(x))
@@ -1955,7 +1955,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for i64 {
-            type Output = i64;
+            type Output = Self;
 
             fn cast(x: $medium8) -> Self::Output {
                 i64(i8(x))
@@ -1971,7 +1971,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for i32 {
-            type Output = i32;
+            type Output = Self;
 
             fn cast(x: $medium8) -> Self::Output {
                 i32(i8(x))
@@ -1987,7 +1987,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for i16 {
-            type Output = i16;
+            type Output = Self;
 
             fn cast(x: $medium8) -> Self::Output {
                 i16(i8(x))
@@ -2003,7 +2003,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for i8 {
-            type Output = i8;
+            type Output = Self;
 
             fn cast(x: $medium8) -> Self::Output {
                 (x.bits >> $medium8::fbits()) as i8
@@ -2020,7 +2020,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for usize {
-            type Output = Result<usize, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium8) -> Self::Output {
                 usize(i8(x))
@@ -2036,7 +2036,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for u64 {
-            type Output = Result<u64, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium8) -> Self::Output {
                 u64(i8(x))
@@ -2052,7 +2052,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for u32 {
-            type Output = Result<u32, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium8) -> Self::Output {
                 u32(i8(x))
@@ -2068,7 +2068,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for u16 {
-            type Output = Result<u16, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium8) -> Self::Output {
                 u16(i8(x))
@@ -2084,7 +2084,7 @@ macro_rules! cast {
         }
 
         impl cast::From<$medium8> for u8 {
-            type Output = Result<u8, Error>;
+            type Output = Result<Self, Error>;
 
             fn cast(x: $medium8) -> Self::Output {
                 u8(i8(x))
@@ -2379,7 +2379,7 @@ macro_rules! from_uxx {
 }
 
 impl cast::From<I16F16> for i16 {
-    type Output = i16;
+    type Output = Self;
 
     fn cast(x: I16F16) -> Self::Output {
         (x.bits >> I16F16::fbits()) as i16
@@ -2404,7 +2404,7 @@ to_ixx!(i16;
         I17F15);
 
 impl cast::From<u16> for I16F16 {
-    type Output = Result<I16F16, Error>;
+    type Output = Result<Self, Error>;
 
     fn cast(x: u16) -> Self::Output {
         i32(u32(x) << I16F16::fbits()).map(I16F16::from_bits)
@@ -2429,7 +2429,7 @@ from_uxx!(i32, u16;
           I17F15);
 
 impl cast::From<I8F24> for i8 {
-    type Output = i8;
+    type Output = Self;
 
     fn cast(x: I8F24) -> Self::Output {
         (x.bits >> I8F24::fbits()) as i8
@@ -2439,7 +2439,7 @@ impl cast::From<I8F24> for i8 {
 to_ixx!(i8; I15F17, I14F18, I13F19, I12F20, I11F21, I10F22, I9F23);
 
 impl cast::From<u8> for I8F24 {
-    type Output = Result<I8F24, Error>;
+    type Output = Result<Self, Error>;
 
     fn cast(x: u8) -> Self::Output {
         i32(u32(x) << I8F24::fbits()).map(I8F24::from_bits)
@@ -2449,7 +2449,7 @@ impl cast::From<u8> for I8F24 {
 from_uxx!(i32, u8; I15F17, I14F18, I13F19, I12F20, I11F21, I10F22, I9F23);
 
 impl cast::From<I8F8> for i8 {
-    type Output = i8;
+    type Output = Self;
 
     fn cast(x: I8F8) -> Self::Output {
         (x.bits >> I8F8::fbits()) as i8
@@ -2459,7 +2459,7 @@ impl cast::From<I8F8> for i8 {
 to_ixx!(i8; I15F1, I14F2, I13F3, I12F4, I11F5, I10F6, I9F7);
 
 impl cast::From<u8> for I8F8 {
-    type Output = Result<I8F8, Error>;
+    type Output = Result<Self, Error>;
 
     fn cast(x: u8) -> Self::Output {
         i16(u16(x) << I8F8::fbits()).map(I8F8::from_bits)
