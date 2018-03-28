@@ -10,6 +10,9 @@ use cast;
 
 use Q;
 
+/// An error which can be returned when parsing a fixed-point number.
+///
+/// This error is used as the error type for the `from_str_radix()`` functions.
 #[derive(PartialEq, Debug)]
 pub struct ParseFixedError;
 

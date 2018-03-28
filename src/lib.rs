@@ -102,6 +102,8 @@ use typenum::{Cmp, Greater, Less, U0, U1, U2, U3, U4, U5, U6, U7, U8, U9, U10,
 
 mod num_traits_impl;
 
+pub use num_traits_impl::*;
+
 /// Fixed point number
 ///
 /// - `BITS` is the integer primitive used to stored the number
