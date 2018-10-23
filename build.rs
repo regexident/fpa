@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate quote;
 extern crate syn;
+extern crate proc_macro2;
 
 use std::{env, fmt};
 use std::io::Write;
@@ -98,6 +99,8 @@ const PRIMITIVES: [Primitive; 10] = [
 ];
 
 fn main() {
+    let span = proc_macro2::Span::call_site();
+
     let mut qs = vec![];
     for bits in &[8, 16, 32] {
         for fbits in 1..*bits {
@@ -113,10 +116,10 @@ fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
 
     let cross_tests: Vec<_> = qs.iter().flat_map(|qx| {
-        let test_name = syn::Ident::from(format!("i{}f{}", qx.ibits(), qx.fbits));
-        let qx_name = syn::Ident::from(format!("{}", qx));
+        let test_name = syn::Ident::new(&format!("i{}f{}", qx.ibits(), qx.fbits), span.clone());
+        let qx_name = syn::Ident::new(&format!("{}", qx), span.clone());
         let asserts: Vec<_> = qs.iter().map(move |qy| {
-            let qy_name = syn::Ident::from(format!("{}", qy));
+            let qy_name = syn::Ident::new(&format!("{}", qy), span.clone());
             if qx.ibits() < qy.ibits() {
                 quote! {
                     assert_eq!(f64(#qx_name(#qy_name(0.5_f64).unwrap()).unwrap()), 0.5);
@@ -141,10 +144,10 @@ fn main() {
     f.write_all(cross_tokens.to_string().as_bytes()).unwrap();
 
     let to_ixx_tests: Vec<_> = qs.iter().flat_map(|q| {
-        let test_name = syn::Ident::from(format!("i{}f{}", q.ibits(), q.fbits));
-        let q_name = syn::Ident::from(format!("{}", q));
+        let test_name = syn::Ident::new(&format!("i{}f{}", q.ibits(), q.fbits), span.clone());
+        let q_name = syn::Ident::new(&format!("{}", q), span.clone());
         let asserts: Vec<_> = PRIMITIVES.iter().map(move |p| {
-            let p_name = syn::Ident::from(format!("{}", p));
+            let p_name = syn::Ident::new(&format!("{}", p), span.clone());
             let (f, i): (f64, u8) = if q.ibits() == 1 {
                 (0.4, 0)
             } else {
@@ -174,10 +177,10 @@ fn main() {
     f.write_all(to_ixx_tokens.to_string().as_bytes()).unwrap();
 
     let from_ixx_tests: Vec<_> = qs.iter().flat_map(|q| {
-        let test_name = syn::Ident::from(format!("i{}f{}", q.ibits(), q.fbits));
-        let q_name = syn::Ident::from(format!("{}", q));
+        let test_name = syn::Ident::new(&format!("i{}f{}", q.ibits(), q.fbits), span.clone());
+        let q_name = syn::Ident::new(&format!("{}", q), span.clone());
         let asserts: Vec<_> = PRIMITIVES.iter().map(move |p| {
-            let p_name = syn::Ident::from(format!("{}", p));
+            let p_name = syn::Ident::new(&format!("{}", p), span.clone());
             let i = if q.ibits() == 1 {
                 0
             } else {

@@ -23,8 +23,9 @@ default-features = false
 version = "0.2.0"
 
 [build-dependencies]
-quote = "0.4.2"
-syn = "0.12.13"
+quote = "0.6.8"
+syn = "0.15.13"
+proc-macro2 = "0.4.20"
 
 [features]
 const-fn = []
